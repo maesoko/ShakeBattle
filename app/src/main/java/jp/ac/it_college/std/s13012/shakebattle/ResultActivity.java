@@ -2,8 +2,6 @@ package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 
 public class ResultActivity extends Activity {
