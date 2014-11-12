@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="jp.ac.it_college.std.s13012.shakebattle.CountSelectedFragment">
+
+    <TextView
+        android:id="@+id/label_count_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:textSize="24sp"
+        android:text="@string/count_select"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@id/label_count_select"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        >
+
+        <Button
+            android:id="@+id/button_count_50"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/count_50"
+            />
+
+        <Button
+            android:id="@+id/button_count_100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/count_100"
+            />
+
+        <Button
+            android:id="@+id/button_count_2000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/count_2000"
+            />
+
+        <Button
+            android:id="@+id/button_to_title"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_gravity="right"
+            android:text="@string/back"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

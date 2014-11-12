@@ -1,6 +1,7 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 
 
 public class ModeFragment extends Fragment implements View.OnClickListener {
+
+
     public ModeFragment() {
         // Required empty public constructor
     }
@@ -32,7 +35,10 @@ public class ModeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.label_count_attack:
-                startActivity(new Intent(getActivity(), CountAttackActivity.class));
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new CountSelectedFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
                 break;
             case R.id.label_time_attack:
                 startActivity(new Intent(getActivity(), TimeAttackActivity.class));
