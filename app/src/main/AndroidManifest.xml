@@ -9,6 +9,7 @@
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
             android:name=".TitleActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,22 +19,27 @@
         </activity>
         <activity
             android:name=".ParticipationWaitActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_participation_wait" >
         </activity>
         <activity
             android:name=".TimeAttackActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_time_attack" >
         </activity>
         <activity
             android:name=".ResultActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_result" >
         </activity>
         <activity
             android:name=".OpponentSearchActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_opponent_search" >
         </activity>
         <activity
             android:name=".CountAttackActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_count_attack" >
         </activity>
     </application>
