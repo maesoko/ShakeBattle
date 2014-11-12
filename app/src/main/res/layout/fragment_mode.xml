@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="jp.ac.it_college.std.s13012.shakebattle.ModeFragment">
+
+    <TextView
+        android:id="@+id/label_count_attack"
+        style="@style/titele_menu_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/count_attack" />
+
+    <TextView
+        android:id="@+id/label_time_attack"
+        style="@style/titele_menu_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label_count_attack"
+        android:text="@string/time_attack" />
+
+    <ImageView
+        android:id="@+id/mode_separator_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/label_time_attack"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/separator"
+        />
+
+    <TextView
+        android:id="@+id/label_guest"
+        style="@style/titele_menu_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label_time_attack"
+        android:text="@string/guest" />
+
+
+</RelativeLayout>
