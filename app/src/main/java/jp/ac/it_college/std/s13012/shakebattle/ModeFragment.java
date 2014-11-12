@@ -39,7 +39,10 @@ public class ModeFragment extends Fragment implements View.OnClickListener {
                         .commit();
                 break;
             case R.id.label_time_attack:
-                startActivity(new Intent(getActivity(), TimeAttackActivity.class));
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new TimeSelectedFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
                 break;
             case R.id.label_guest:
                 startActivity(new Intent(getActivity(), OpponentSearchActivity.class));
