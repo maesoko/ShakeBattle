@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jp.ac.it_college.std.s13012.shakebattle.CountSelectedFragment">
+    tools:context="jp.ac.it_college.std.s13012.shakebattle.CountSelectFragment">
 
     <TextView
         android:id="@+id/label_count_select"

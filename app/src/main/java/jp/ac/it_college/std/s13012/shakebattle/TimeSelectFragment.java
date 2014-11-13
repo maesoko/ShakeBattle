@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CountSelectedFragment extends BaseFragment implements View.OnClickListener{
+public class TimeSelectFragment extends BaseFragment implements View.OnClickListener{
 
-    public static final String SELECTED_COUNT = "selected_count";
+    public static final String SELECTED_TIME = "selected_time";
 
-    public CountSelectedFragment() {
+    public TimeSelectFragment() {
         // Required empty public constructor
     }
 
@@ -17,11 +17,11 @@ public class CountSelectedFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_count_selected, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_time_select, container, false);
 
-        rootView.findViewById(R.id.button_count_50).setOnClickListener(this);
-        rootView.findViewById(R.id.button_count_100).setOnClickListener(this);
-        rootView.findViewById(R.id.button_count_2000).setOnClickListener(this);
+        rootView.findViewById(R.id.button_time_10sec).setOnClickListener(this);
+        rootView.findViewById(R.id.button_time_20sec).setOnClickListener(this);
+        rootView.findViewById(R.id.button_time_30sec).setOnClickListener(this);
         rootView.findViewById(R.id.button_to_title).setOnClickListener(this);
 
         return rootView;
@@ -30,16 +30,16 @@ public class CountSelectedFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.button_count_50:
-                super.selectedTimeOrCount(SELECTED_COUNT, 50,
+            case R.id.button_time_10sec:
+                super.selectedTimeOrCount(SELECTED_TIME, 10,
                         getActivity(), ParticipationWaitActivity.class);
                 break;
-            case R.id.button_count_100:
-                super.selectedTimeOrCount(SELECTED_COUNT, 100,
+            case R.id.button_time_20sec:
+                super.selectedTimeOrCount(SELECTED_TIME, 20,
                         getActivity(), ParticipationWaitActivity.class);
                 break;
-            case R.id.button_count_2000:
-                super.selectedTimeOrCount(SELECTED_COUNT, 2000,
+            case R.id.button_time_30sec:
+                super.selectedTimeOrCount(SELECTED_TIME, 30,
                         getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_to_title:
