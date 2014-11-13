@@ -1,15 +1,13 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
-public class ModeFragment extends Fragment implements View.OnClickListener {
+public class ModeFragment extends BaseFragment implements View.OnClickListener {
 
 
     public ModeFragment() {
@@ -33,16 +31,10 @@ public class ModeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.label_count_attack:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new CountSelectedFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                super.fragmentReplace(R.id.fragment_container, new CountSelectedFragment());
                 break;
             case R.id.label_time_attack:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new TimeSelectedFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                super.fragmentReplace(R.id.fragment_container, new TimeSelectedFragment());
                 break;
             case R.id.label_guest:
                 startActivity(new Intent(getActivity(), OpponentSearchActivity.class));

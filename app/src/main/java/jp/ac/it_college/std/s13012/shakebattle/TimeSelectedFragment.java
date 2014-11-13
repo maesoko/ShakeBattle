@@ -1,14 +1,11 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
-import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TimeSelectedFragment extends Fragment implements View.OnClickListener{
+public class TimeSelectedFragment extends BaseFragment implements View.OnClickListener{
 
     public static final String SELECTED_TIME = "selected_time";
 
@@ -30,29 +27,23 @@ public class TimeSelectedFragment extends Fragment implements View.OnClickListen
         return rootView;
     }
 
-    private void timeSelected(int time) {
-        Intent intent = new Intent(getActivity(), TimeAttackActivity.class);
-        intent.putExtra(SELECTED_TIME, time);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_time_10sec:
-                timeSelected(10);
+                super.selectedTimeOrCount(SELECTED_TIME, 10,
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_time_20sec:
-                timeSelected(20);
+                super.selectedTimeOrCount(SELECTED_TIME, 20,
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_time_30sec:
-                timeSelected(30);
+                super.selectedTimeOrCount(SELECTED_TIME, 30,
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_to_title:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ModeFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                super.fragmentReplace(R.id.fragment_container, new ModeFragment());
                 break;
         }
     }
