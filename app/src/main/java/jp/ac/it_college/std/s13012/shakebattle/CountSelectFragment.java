@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CountSelectFragment extends BaseFragment implements View.OnClickListener{
+public class CountSelectFragment extends BaseFragment implements View.OnClickListener {
 
     public static final String SELECTED_COUNT = "selected_count";
 
@@ -31,16 +31,16 @@ public class CountSelectFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_count_50:
-                super.selectedTimeOrCount(SELECTED_COUNT, 50,
-                        getActivity(), ParticipationWaitActivity.class);
+                super.selectedTimeOrCount(SELECTED_COUNT, 50, getActivity(),
+                        CountAttackActivity.class);
                 break;
             case R.id.button_count_100:
                 super.selectedTimeOrCount(SELECTED_COUNT, 100,
-                        getActivity(), ParticipationWaitActivity.class);
+                        getActivity(), CountAttackActivity.class);
                 break;
             case R.id.button_count_2000:
                 super.selectedTimeOrCount(SELECTED_COUNT, 2000,
-                        getActivity(), ParticipationWaitActivity.class);
+                        getActivity(), CountAttackActivity.class);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());

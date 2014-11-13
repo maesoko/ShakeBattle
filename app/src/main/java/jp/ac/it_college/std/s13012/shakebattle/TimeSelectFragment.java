@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TimeSelectFragment extends BaseFragment implements View.OnClickListener{
+public class TimeSelectFragment extends BaseFragment implements View.OnClickListener {
 
     public static final String SELECTED_TIME = "selected_time";
 
@@ -32,15 +32,15 @@ public class TimeSelectFragment extends BaseFragment implements View.OnClickList
         switch (view.getId()) {
             case R.id.button_time_10sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 10,
-                        getActivity(), ParticipationWaitActivity.class);
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_time_20sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 20,
-                        getActivity(), ParticipationWaitActivity.class);
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_time_30sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 30,
-                        getActivity(), ParticipationWaitActivity.class);
+                        getActivity(), TimeAttackActivity.class);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());
