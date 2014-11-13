@@ -5,11 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TimeSelectedFragment extends BaseFragment implements View.OnClickListener{
+public class TimeSelectFragment extends BaseFragment implements View.OnClickListener {
 
     public static final String SELECTED_TIME = "selected_time";
 
-    public TimeSelectedFragment() {
+    public TimeSelectFragment() {
         // Required empty public constructor
     }
 
@@ -17,7 +17,7 @@ public class TimeSelectedFragment extends BaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_time_selected, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_time_select, container, false);
 
         rootView.findViewById(R.id.button_time_10sec).setOnClickListener(this);
         rootView.findViewById(R.id.button_time_20sec).setOnClickListener(this);

@@ -8,16 +8,19 @@ import android.view.MotionEvent;
 
 public class ParticipationWaitActivity extends Activity {
 
+    private Class destination;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participation_wait);
+        destination = (Class) getIntent().getSerializableExtra(BaseFragment.DESTINATION_CLASS);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            Intent intent = new Intent(this, TimeAttackActivity.class);
+            Intent intent = new Intent(this, destination);
             startActivity(intent);
             return true;
         }

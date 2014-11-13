@@ -31,10 +31,10 @@ public class ModeFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.label_count_attack:
-                super.fragmentReplace(R.id.fragment_container, new CountSelectedFragment());
+                super.fragmentReplace(R.id.fragment_container, new CountSelectFragment());
                 break;
             case R.id.label_time_attack:
-                super.fragmentReplace(R.id.fragment_container, new TimeSelectedFragment());
+                super.fragmentReplace(R.id.fragment_container, new TimeSelectFragment());
                 break;
             case R.id.label_guest:
                 startActivity(new Intent(getActivity(), OpponentSearchActivity.class));
