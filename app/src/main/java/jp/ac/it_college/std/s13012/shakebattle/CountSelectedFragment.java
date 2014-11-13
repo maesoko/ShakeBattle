@@ -32,15 +32,15 @@ public class CountSelectedFragment extends BaseFragment implements View.OnClickL
         switch (view.getId()) {
             case R.id.button_count_50:
                 super.selectedTimeOrCount(SELECTED_COUNT, 50,
-                        getActivity(), CountAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_count_100:
                 super.selectedTimeOrCount(SELECTED_COUNT, 100,
-                        getActivity(), CountAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_count_2000:
                 super.selectedTimeOrCount(SELECTED_COUNT, 2000,
-                        getActivity(), CountAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());

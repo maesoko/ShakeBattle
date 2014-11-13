@@ -32,15 +32,15 @@ public class TimeSelectedFragment extends BaseFragment implements View.OnClickLi
         switch (view.getId()) {
             case R.id.button_time_10sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 10,
-                        getActivity(), TimeAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_time_20sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 20,
-                        getActivity(), TimeAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_time_30sec:
                 super.selectedTimeOrCount(SELECTED_TIME, 30,
-                        getActivity(), TimeAttackActivity.class);
+                        getActivity(), ParticipationWaitActivity.class);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());
