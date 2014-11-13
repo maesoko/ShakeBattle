@@ -1,13 +1,9 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-
-
 
 public class CountSelectedFragment extends BaseFragment implements View.OnClickListener{
 
@@ -16,7 +12,6 @@ public class CountSelectedFragment extends BaseFragment implements View.OnClickL
     public CountSelectedFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,23 +27,20 @@ public class CountSelectedFragment extends BaseFragment implements View.OnClickL
         return rootView;
     }
 
-    private void countSelected(int count) {
-        Intent intent = new Intent(getActivity(), CountAttackActivity.class);
-        intent.putExtra(SELECTED_COUNT, count);
-        startActivity(intent);
-    }
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_count_50:
-                countSelected(50);
+                super.selectedTimeOrCount(SELECTED_COUNT, 50,
+                        getActivity(), CountAttackActivity.class);
                 break;
             case R.id.button_count_100:
-                countSelected(100);
+                super.selectedTimeOrCount(SELECTED_COUNT, 100,
+                        getActivity(), CountAttackActivity.class);
                 break;
             case R.id.button_count_2000:
-                countSelected(2000);
+                super.selectedTimeOrCount(SELECTED_COUNT, 2000,
+                        getActivity(), CountAttackActivity.class);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());
