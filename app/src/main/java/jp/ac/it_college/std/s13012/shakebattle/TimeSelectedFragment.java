@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class TimeSelectedFragment extends Fragment implements View.OnClickListener{
+public class TimeSelectedFragment extends BaseFragment implements View.OnClickListener{
 
     public static final String SELECTED_TIME = "selected_time";
 
@@ -49,10 +49,7 @@ public class TimeSelectedFragment extends Fragment implements View.OnClickListen
                 timeSelected(30);
                 break;
             case R.id.button_to_title:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ModeFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                super.fragmentReplace(R.id.fragment_container, new ModeFragment());
                 break;
         }
     }

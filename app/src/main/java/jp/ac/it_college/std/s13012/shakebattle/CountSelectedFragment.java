@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 
 
-public class CountSelectedFragment extends Fragment implements View.OnClickListener{
+public class CountSelectedFragment extends BaseFragment implements View.OnClickListener{
 
     public static final String SELECTED_COUNT = "selected_count";
 
@@ -53,10 +53,7 @@ public class CountSelectedFragment extends Fragment implements View.OnClickListe
                 countSelected(2000);
                 break;
             case R.id.button_to_title:
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new ModeFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit();
+                super.fragmentReplace(R.id.fragment_container, new ModeFragment());
                 break;
         }
     }
