@@ -3,7 +3,6 @@ package jp.ac.it_college.std.s13012.shakebattle;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 
 
@@ -16,7 +15,6 @@ public class ParticipationWaitActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participation_wait);
         destination = (Class) getIntent().getSerializableExtra(BaseFragment.DESTINATION_CLASS);
-        Log.v("class", String.valueOf(destination));
     }
 
     @Override
