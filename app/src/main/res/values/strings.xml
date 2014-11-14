@@ -33,5 +33,6 @@
     <string name="time_10sec">10秒</string>
     <string name="time_20sec">20秒</string>
     <string name="time_30sec">30秒</string>
+    <string name="unit_time">秒</string>
 
 </resources>

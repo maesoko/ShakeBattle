@@ -26,6 +26,14 @@
         />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/remaining_time"
+        android:layout_alignTop="@id/remaining_time"
+        android:text="@string/unit_time"
+        />
+
+    <TextView
         android:id="@+id/name_of_person"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
