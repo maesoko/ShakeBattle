@@ -82,7 +82,7 @@ public class TimeSurfaceView implements SurfaceHolder.Callback, Runnable{
             String elapsedTimeText = String.format("%.2f", mElapsedTime / 1000f);
             mPaint.setColor(Color.BLACK);
             mPaint.setAntiAlias(true);
-            mPaint.setTextSize(38);
+            mPaint.setTextSize(20);
             Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
             float textWidth = mPaint.measureText(elapsedTimeText);
             float baseX = canvas.getWidth() - textWidth;
