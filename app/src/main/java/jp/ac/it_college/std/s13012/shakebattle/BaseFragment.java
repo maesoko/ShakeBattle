@@ -16,9 +16,8 @@ public abstract class BaseFragment extends Fragment {
                 .commit();
     }
 
-    public void selectedTimeOrCount(String name, int value, Context context, Class destination) {
+    public void selectedTimeOrCount(Context context, Class destination) {
         Intent intent = new Intent(context, ParticipationWaitActivity.class)
-                .putExtra(name, value)
                 .putExtra(DESTINATION_CLASS, destination);
         startActivity(intent);
     }
