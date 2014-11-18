@@ -34,5 +34,6 @@
     <string name="time_20sec">20秒</string>
     <string name="time_30sec">30秒</string>
     <string name="unit_time">秒</string>
+    <string name="title_activity_wait_opponent">WaitOpponentActivity</string>
 
 </resources>

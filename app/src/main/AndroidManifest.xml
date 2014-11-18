@@ -6,11 +6,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar">
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <activity
             android:name=".TitleActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_title" >
+            android:label="@string/title_activity_title"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,28 +19,32 @@
         </activity>
         <activity
             android:name=".ParticipationWaitActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_participation_wait" >
+            android:label="@string/title_activity_participation_wait"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".TimeAttackActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_time_attack" >
+            android:label="@string/title_activity_time_attack"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ResultActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_result" >
+            android:label="@string/title_activity_result"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".OpponentSearchActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_opponent_search" >
+            android:label="@string/title_activity_opponent_search"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CountAttackActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_count_attack" >
+            android:label="@string/title_activity_count_attack"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".WaitOpponentActivity"
+            android:label="@string/title_activity_wait_opponent" >
         </activity>
     </application>
 
