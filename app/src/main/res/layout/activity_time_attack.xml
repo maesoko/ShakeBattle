@@ -59,5 +59,14 @@
         android:textSize="52sp"
         android:text="0"
         />
+    
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>
