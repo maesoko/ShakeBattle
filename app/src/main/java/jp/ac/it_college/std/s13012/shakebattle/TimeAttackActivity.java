@@ -2,6 +2,10 @@ package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -13,20 +17,45 @@ import android.view.animation.ScaleAnimation;
 import android.widget.TextView;
 
 
-public class TimeAttackActivity extends Activity {
+public class TimeAttackActivity extends Activity
+        implements SensorEventListener{
     private TextView timer;
     private CountDown countDown;
     private TextView message;
+    private SensorManager mSensorManager;
+    private Sensor mSensor;
+    private TextView mCountTextView;
+    private int mCounter = 0;
+    private ShakeDiscriminator shakeDiscriminator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_attack);
 
+        shakeDiscriminator = new ShakeDiscriminator();
+        mCountTextView = (TextView) findViewById(R.id.current_count);
         timer = (TextView) findViewById(R.id.remaining_time);
         timer.setText(String.valueOf(TimeSelectFragment.getRemainingTime() / 1000));
         countDown = new CountDown(TimeSelectFragment.getRemainingTime(),1000);
+        //センサーの準備
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         ready();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //センサーの取得
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        //センサーマネージャーへイベントリスナーを登録
+        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mSensorManager.unregisterListener(this);
     }
 
     private void ready() {
@@ -81,6 +110,21 @@ public class TimeAttackActivity extends Activity {
             return true;
         }
         return super.onTouchEvent(event);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            if (shakeDiscriminator.detectShake(sensorEvent)) {
+                //シェイク時の処理
+                mCountTextView.setText(String.valueOf(mCounter++));
+            }
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
     }
 
     public class CountDown extends CountDownTimer {
