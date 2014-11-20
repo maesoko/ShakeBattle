@@ -27,6 +27,7 @@ public class TimeAttackActivity extends Activity
     private TextView mCountTextView;
     private int mCounter = 0;
     private ShakeDiscriminator shakeDiscriminator;
+    private boolean mGameIsRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,12 +100,17 @@ public class TimeAttackActivity extends Activity
 
 
     private void gameStart() {
+        mGameIsRunning = true;
         countDown.start();
+    }
+
+    private void gameEnd(){
+        mGameIsRunning = false;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP && !mGameIsRunning) {
             Intent intent = new Intent(this, ResultActivity.class);
             startActivity(intent);
             return true;
@@ -115,7 +121,7 @@ public class TimeAttackActivity extends Activity
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            if (shakeDiscriminator.detectShake(sensorEvent)) {
+            if (shakeDiscriminator.detectShake(sensorEvent) && mGameIsRunning) {
                 //シェイク時の処理
                 mCountTextView.setText(String.valueOf(mCounter++));
             }
@@ -142,8 +148,7 @@ public class TimeAttackActivity extends Activity
         public void onFinish() {
             timer.setText("0");
             message.setText("Finish!");
+            gameEnd();
         }
     }
-
-
 }
