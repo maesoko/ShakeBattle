@@ -59,7 +59,6 @@
         android:id="@+id/current_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_centerInParent="true"
         android:textSize="80sp"
         android:text="0"
