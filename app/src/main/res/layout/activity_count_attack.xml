@@ -12,6 +12,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="horizontal"
         >
 
@@ -53,7 +54,7 @@
     <SurfaceView
         android:id="@+id/label_elapsed_time_count"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_weight="1"
         android:text="0"
         />
