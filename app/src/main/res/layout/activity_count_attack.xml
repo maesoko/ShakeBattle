@@ -12,6 +12,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:orientation="horizontal"
         >
 
@@ -20,6 +21,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="20sp"
         android:text="@string/goal"
         />
     
@@ -27,13 +29,14 @@
         android:id="@+id/label_goal_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
         android:text="0"
         />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:textSize="20sp"
         android:text="@string/unit_count"
         />
 
@@ -42,14 +45,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginLeft="20dp"
         android:layout_below="@id/label_goal"
+        android:textSize="20sp"
         android:text="@string/elapsed_time"
         />
 
     <SurfaceView
         android:id="@+id/label_elapsed_time_count"
         android:layout_width="0dp"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_weight="1"
         android:text="0"
         />
@@ -58,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/unit_time"
+        android:textSize="20sp"
         />
 
     </LinearLayout>
@@ -68,7 +74,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/header"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
+        android:textSize="20sp"
         android:text="xxx"
         />
 
@@ -77,6 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/name_of_person"
         android:layout_toRightOf="@id/name_of_person"
+        android:textSize="20sp"
         android:text="@string/during_the_competition"
         />
 
@@ -84,10 +93,9 @@
         android:id="@+id/current_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_of_person"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:textSize="52sp"
+        android:textSize="80sp"
+        android:layout_centerInParent="true"
         android:text="0"
         />
 
@@ -95,6 +103,7 @@
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/current_count"
         android:gravity="center"
         android:textSize="40sp"
         android:visibility="gone"

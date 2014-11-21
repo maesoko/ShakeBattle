@@ -12,7 +12,7 @@
     <string name="title">振るカウント</string>
     <string name="title_activity_participation_wait">ParticipationWaitActivity</string>
     <string name="title_activity_time_attack">TimeAttackActivity</string>
-    <string name="time_limit">制限時間:</string>
+    <string name="time_limit">残り:</string>
     <string name="during_the_competition">と対戦中</string>
     <string name="title_activity_result">ResultActivity</string>
     <string name="win">WIN</string>
