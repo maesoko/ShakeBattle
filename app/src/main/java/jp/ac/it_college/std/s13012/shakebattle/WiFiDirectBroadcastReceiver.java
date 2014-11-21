@@ -1,5 +1,6 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +13,11 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
-    private WaitOpponentActivity activity;
+    private Activity activity;
 
 
     public WiFiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel,
-                                       WaitOpponentActivity activity) {
+                                       Activity activity) {
         super();
         this.manager = manager;
         this.channel = channel;
