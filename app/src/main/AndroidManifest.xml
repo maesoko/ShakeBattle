@@ -28,11 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ParticipationWaitActivity"
-            android:label="@string/title_activity_participation_wait"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
             android:name=".TimeAttackActivity"
             android:label="@string/title_activity_time_attack"
             android:screenOrientation="portrait" >
