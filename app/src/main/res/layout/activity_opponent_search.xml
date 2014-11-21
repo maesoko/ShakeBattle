@@ -9,45 +9,22 @@
     tools:context="jp.ac.it_college.std.s13012.shakebattle.OpponentSearchActivity">
 
     <TextView
-        android:id="@+id/label_opponents_who_are_near"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="18dp"
-        android:textSize="30sp"
-        android:text="@string/opponents_who_are_near"
-        />
-
-    <ScrollView
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/label_opponents_who_are_near"
-        >
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:textSize="30sp"
+        android:text="@string/opponents_list"
+        />
+    
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
+    </FrameLayout>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:text="田中"
-                />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:text="斎藤"
-                />
-
-        </LinearLayout>
-
-    </ScrollView>
 
 </RelativeLayout>

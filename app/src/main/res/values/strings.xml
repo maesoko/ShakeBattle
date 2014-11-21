@@ -20,7 +20,7 @@
     <string name="result_of_opponent">相手の結果</string>
     <string name="go_to_title">タイトル</string>
     <string name="title_activity_opponent_search">OpponentSearchActivity</string>
-    <string name="opponents_who_are_near">近くに居る対戦相手</string>
+    <string name="opponents_list">近くに居る対戦相手</string>
     <string name="title_activity_count_attack">CountAttackActivity</string>
     <string name="goal">目標:</string>
     <string name="elapsed_time">経過時間:</string>
@@ -35,5 +35,6 @@
     <string name="time_30sec">30秒</string>
     <string name="unit_time">秒</string>
     <string name="title_activity_wait_opponent">WaitOpponentActivity</string>
+    <string name="retry_discover">再検索</string>
 
 </resources>
