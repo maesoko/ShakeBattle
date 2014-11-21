@@ -5,13 +5,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.view.MotionEvent;
 
 
 public class WaitOpponentActivity extends Activity
-        implements WifiP2pManager.ChannelListener{
+        implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
+        ,DeviceListFragment.DeviceActionListener{
 
     private Class destination;
 
@@ -19,7 +21,6 @@ public class WaitOpponentActivity extends Activity
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private BroadcastReceiver receiver = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class WaitOpponentActivity extends Activity
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
+
     }
 
     @Override
@@ -50,7 +52,7 @@ public class WaitOpponentActivity extends Activity
     @Override
     protected void onResume() {
         super.onResume();
-        receiver = new WiFiDirectBroadcastReceiver(manager, channel, this);
+        receiver = new WiFiDirectBroadcastReceiver(this);
         registerReceiver(receiver, intentFilter);
     }
 
@@ -60,8 +62,36 @@ public class WaitOpponentActivity extends Activity
         unregisterReceiver(receiver);
     }
 
+    /* implemented ChannelListener */
     @Override
     public void onChannelDisconnected() {
+
+    }
+
+    /* implemented OnReceiveListener */
+    @Override
+    public void onStateChanged() {
+
+    }
+
+    @Override
+    public void onPeersChanged() {
+
+    }
+
+    @Override
+    public void onConnectionChanged() {
+
+    }
+
+    @Override
+    public void onThisDeviceChanged() {
+
+    }
+
+    /* implemented DeviceActionListener */
+    @Override
+    public void connect(WifiP2pConfig config) {
 
     }
 }
