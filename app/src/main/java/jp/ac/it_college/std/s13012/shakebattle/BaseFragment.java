@@ -17,7 +17,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     public void selectedTimeOrCount(Context context, Class destination) {
-        Intent intent = new Intent(context, ParticipationWaitActivity.class)
+        Intent intent = new Intent(context, WaitOpponentActivity.class)
                 .putExtra(DESTINATION_CLASS, destination);
         startActivity(intent);
     }
