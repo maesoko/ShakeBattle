@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:textSize="30sp"
         android:text="@string/time_limit"
         />
 
@@ -21,8 +22,9 @@
         android:id="@+id/remaining_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/label_time_limit"
         android:text="0"
+        android:textSize="30sp"
+        android:layout_toRightOf="@id/label_time_limit"
         />
 
     <TextView
@@ -30,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/remaining_time"
         android:layout_alignTop="@id/remaining_time"
+        android:textSize="30sp"
         android:text="@string/unit_time"
         />
 
@@ -39,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/label_time_limit"
         android:layout_marginTop="10dp"
+        android:textSize="20sp"
         android:text="xxx"
         />
 
@@ -47,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/name_of_person"
         android:text="@string/during_the_competition"
+        android:textSize="20sp"
         android:layout_alignTop="@id/name_of_person"
         />
 
@@ -54,11 +59,19 @@
         android:id="@+id/current_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/name_of_person"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="52sp"
+        android:layout_centerInParent="true"
+        android:textSize="80sp"
         android:text="0"
+        />
+    
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/current_count"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

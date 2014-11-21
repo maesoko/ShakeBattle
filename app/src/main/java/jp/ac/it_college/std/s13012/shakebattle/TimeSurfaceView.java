@@ -66,34 +66,38 @@ public class TimeSurfaceView implements SurfaceHolder.Callback, Runnable{
     @Override
     public void run() {
         while (mIsAlive) {
-            if (mMeasurement) {
-                mEndTime = System.currentTimeMillis();
-                mElapsedTime = mEndTime - mStartTime;
-            }
-            Canvas canvas = mHolder.lockCanvas();
-            //背景
-            mPaint.setColor(Color.WHITE);
-            canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), mPaint);
-
-            //中心座標
-            float centerY = canvas.getHeight() / 2f;
-
-            //文字
-            String elapsedTimeText = String.format("%.2f", mElapsedTime / 1000f);
-            mPaint.setColor(Color.BLACK);
-            mPaint.setAntiAlias(true);
-            mPaint.setTextSize(38);
-            Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
-            float textWidth = mPaint.measureText(elapsedTimeText);
-            float baseX = canvas.getWidth() - textWidth;
-            float baseY = centerY - (fontMetrics.ascent + fontMetrics.descent) / 2;
-
-            canvas.drawText(elapsedTimeText, baseX, baseY, mPaint);
-            mHolder.unlockCanvasAndPost(canvas);
             try {
-                Thread.sleep(1000 / 30);
-            } catch (InterruptedException e) {
-                Log.e("TimeSurfaceView", e.getMessage(), e);
+                if (mMeasurement) {
+                    mEndTime = System.currentTimeMillis();
+                    mElapsedTime = mEndTime - mStartTime;
+                }
+                Canvas canvas = mHolder.lockCanvas();
+                //背景
+                mPaint.setColor(Color.WHITE);
+                canvas.drawRect(0,0, canvas.getWidth(), canvas.getHeight(), mPaint);
+
+                //中心座標
+                float centerY = canvas.getHeight() / 2f;
+
+                //文字
+                String elapsedTimeText = String.format("%.2f", mElapsedTime / 1000f);
+                mPaint.setColor(Color.BLACK);
+                mPaint.setAntiAlias(true);
+                mPaint.setTextSize(38);
+                Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+                float textWidth = mPaint.measureText(elapsedTimeText);
+                float baseX = canvas.getWidth() - textWidth;
+                float baseY = centerY - (fontMetrics.ascent + fontMetrics.descent) / 2;
+
+                canvas.drawText(elapsedTimeText, baseX, baseY, mPaint);
+                mHolder.unlockCanvasAndPost(canvas);
+                try {
+                    Thread.sleep(1000 / 30);
+                } catch (InterruptedException e) {
+                    Log.e("TimeSurfaceView", e.getMessage(), e);
+                }
+            } catch (NullPointerException e) {
+                Log.e("TimeSurfaceView", "NullPointerException", e);
             }
         }
     }
