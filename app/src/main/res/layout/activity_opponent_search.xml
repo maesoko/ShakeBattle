@@ -17,11 +17,21 @@
         android:textSize="30sp"
         android:text="@string/opponents_list"
         />
+
+    <Button
+        android:id="@+id/button_retry_discover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/retry_discover"
+        />
     
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        >
 
     </FrameLayout>
 
