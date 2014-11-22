@@ -9,6 +9,9 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 public class OpponentSearchActivity extends Activity
@@ -20,14 +23,21 @@ public class OpponentSearchActivity extends Activity
     private WifiP2pManager.Channel channel;
     private WiFiDirectBroadcastReceiver receiver;
 
+    private DeviceListFragment deviceListFragment;
+
+    private Button researchButton;
+
+    private String TAG = "OpponentSearchActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_opponent_search);
 
         if (savedInstanceState == null) {
+            deviceListFragment = new DeviceListFragment();
             getFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, new DeviceListFragment())
+                    .add(R.id.fragment_container, deviceListFragment)
                     .commit();
         }
 
@@ -39,6 +49,33 @@ public class OpponentSearchActivity extends Activity
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
+
+        researchButton = (Button) findViewById(R.id.button_retry_discover);
+        researchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               opponentsSearch();
+            }
+        });
+    }
+
+    private void opponentsSearch() {
+        deviceListFragment.clearPeers();
+        deviceListFragment.onInitiateDiscovery();
+        manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+
+            @Override
+            public void onSuccess() {
+                Toast.makeText(OpponentSearchActivity.this, "Discovery Initiated",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int reasonCode) {
+                Toast.makeText(OpponentSearchActivity.this, "Discovery Failed : " + reasonCode,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -56,17 +93,7 @@ public class OpponentSearchActivity extends Activity
         super.onResume();
         receiver = new WiFiDirectBroadcastReceiver(this);
         registerReceiver(receiver, intentFilter);
-        manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
-            @Override
-            public void onSuccess() {
-                Log.d("WiFiDirectBroadcastReceiver", "discoverPeers success");
-            }
-
-            @Override
-            public void onFailure(int i) {
-                Log.d("WiFiDirectBroadcastReceiver", "discoverPeers failure");
-            }
-        });
+        opponentsSearch();
     }
 
     @Override
@@ -84,27 +111,38 @@ public class OpponentSearchActivity extends Activity
     /* implemented OnReceiveListener */
     @Override
     public void onStateChanged() {
-
+        Log.v(TAG, "onStateChanged");
     }
 
     @Override
     public void onPeersChanged() {
-
+        Log.v(TAG, "onPeersChanged");
+        manager.requestPeers(channel, deviceListFragment);
     }
 
     @Override
     public void onConnectionChanged() {
-
+        Log.v(TAG, "onConnectionChanged");
     }
 
     @Override
     public void onThisDeviceChanged() {
-
+        Log.v(TAG, "onThisDeviceChanged");
     }
 
     /* implemented DeviceActionListener */
     @Override
     public void connect(WifiP2pConfig config) {
+        manager.connect(channel, config, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.v(TAG, "onSuccess");
+            }
 
+            @Override
+            public void onFailure(int i) {
+                Log.v(TAG, "onFailure");
+            }
+        });
     }
 }

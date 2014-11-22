@@ -36,5 +36,6 @@
     <string name="unit_time">秒</string>
     <string name="title_activity_wait_opponent">WaitOpponentActivity</string>
     <string name="retry_discover">再検索</string>
+    <string name="searching_for_opponent">対戦相手を検索中...</string>
 
 </resources>

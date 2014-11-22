@@ -1,6 +1,7 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,12 +9,14 @@ import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.MotionEvent;
 
 
 public class WaitOpponentActivity extends Activity
         implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
-        ,DeviceListFragment.DeviceActionListener{
+        , DeviceListFragment.DeviceActionListener {
 
     private Class destination;
 
@@ -21,6 +24,7 @@ public class WaitOpponentActivity extends Activity
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private BroadcastReceiver receiver = null;
+    private String TAG = "WaitOpponentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,18 @@ public class WaitOpponentActivity extends Activity
         super.onResume();
         receiver = new WiFiDirectBroadcastReceiver(this);
         registerReceiver(receiver, intentFilter);
+
+        manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.v(TAG, "discoverPeers success");
+            }
+
+            @Override
+            public void onFailure(int i) {
+                Log.v(TAG, "discoverPeers failure");
+            }
+        });
     }
 
     @Override
@@ -71,22 +87,22 @@ public class WaitOpponentActivity extends Activity
     /* implemented OnReceiveListener */
     @Override
     public void onStateChanged() {
-
+        Log.v(TAG, "onStateChanged");
     }
 
     @Override
     public void onPeersChanged() {
-
+        Log.v(TAG, "onPeersChanged");
     }
 
     @Override
     public void onConnectionChanged() {
-
+        Log.v(TAG, "onConnectionChanged");
     }
 
     @Override
     public void onThisDeviceChanged() {
-
+        Log.v(TAG, "onThisDeviceChanged");
     }
 
     /* implemented DeviceActionListener */

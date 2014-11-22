@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     ProgressDialog progressDialog = null;
     View mContentView = null;
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        Log.d("test", "onPeersAvailable");
+        Log.d("DeviceListFragment", "onPeersAvailable");
         peers.clear();
         peers.addAll(peerList.getDeviceList());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
@@ -81,7 +83,7 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
             progressDialog.dismiss();
         }
         progressDialog = ProgressDialog.show(getActivity(),
-                "Press back to cancel", "finding peers", true,
+                "Press back to cancel", getString(R.string.searching_for_opponent), true,
                 true, new DialogInterface.OnCancelListener() {
 
                     @Override
