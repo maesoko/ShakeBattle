@@ -8,6 +8,7 @@ import android.net.wifi.p2p.WifiP2pManager;
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
     private OnReceiveListener listener;
+    private Intent intent;
 
     public WiFiDirectBroadcastReceiver(OnReceiveListener listener) {
         super();
@@ -24,6 +25,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+        this.intent = intent;
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             listener.onStateChanged();
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
@@ -33,5 +35,9 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             listener.onThisDeviceChanged();
         }
+    }
+
+    public Intent getIntent() {
+        return intent;
     }
 }
