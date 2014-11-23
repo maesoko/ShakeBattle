@@ -26,6 +26,7 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
     private List<WifiP2pDevice> peers = new ArrayList<WifiP2pDevice>();
     ProgressDialog progressDialog = null;
     View mContentView = null;
+    private WifiP2pDevice device;
 
 
     @Override
@@ -40,6 +41,32 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
 
         mContentView = inflater.inflate(R.layout.device_list, null);
         return mContentView;
+    }
+
+    /**
+     * @return this device
+     */
+    public WifiP2pDevice getDevice() {
+        return device;
+    }
+
+    private static String getDeviceStatus(int deviceStatus) {
+        Log.v(OpponentSearchActivity.TAG, "Peer status :" + deviceStatus);
+        switch (deviceStatus) {
+            case WifiP2pDevice.AVAILABLE:
+                return "Available";
+            case WifiP2pDevice.INVITED:
+                return "Invited";
+            case WifiP2pDevice.CONNECTED:
+                return "Connected";
+            case WifiP2pDevice.FAILED:
+                return "Failed";
+            case WifiP2pDevice.UNAVAILABLE:
+                return "Unavailable";
+            default:
+                return "Unknown";
+
+        }
     }
 
     /**
@@ -123,14 +150,28 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
             WifiP2pDevice device = items.get(position);
             if (device != null) {
                 TextView top = (TextView) v.findViewById(R.id.device_name);
+                TextView status = (TextView) v.findViewById(R.id.device_status);
                 if (top != null) {
                     top.setText(device.deviceName);
+                }
+                if (status != null) {
+                    status.setText(getDeviceStatus(device.status));
                 }
             }
 
             return v;
         }
     }
+
+    /**
+     * Update UI for this device.
+     *
+     * @param device WifiP2pDevice object
+     */
+    public void updateThisDevice(WifiP2pDevice device) {
+        this.device = device;
+    }
+
 
     /**
      * An interface-callback for the activity to listen to fragment interaction
