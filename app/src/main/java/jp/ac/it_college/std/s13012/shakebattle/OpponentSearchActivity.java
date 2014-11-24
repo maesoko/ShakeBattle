@@ -27,7 +27,7 @@ public class OpponentSearchActivity extends Activity
 
     private Button researchButton;
 
-    private String TAG = "OpponentSearchActivity";
+    public static String TAG = "OpponentSearchActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
