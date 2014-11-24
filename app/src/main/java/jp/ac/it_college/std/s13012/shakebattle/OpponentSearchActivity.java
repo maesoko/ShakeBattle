@@ -54,17 +54,10 @@ public class OpponentSearchActivity extends Activity
         channel = manager.initialize(this, getMainLooper(), null);
 
         researchButton = (Button) findViewById(R.id.button_retry_discover);
-        final Activity activity = this;
         researchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
-                serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
-//                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-//                        wifiP2pInfo.groupOwnerAddress.getHostAddress());
-                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, DataTransferService.EXTRAS_PORT_NUMBER);
-                activity.startService(serviceIntent);
-                new DataServerAsyncTask((android.widget.TextView) view).execute();
+                opponentsSearch();
             }
         });
     }
@@ -103,7 +96,20 @@ public class OpponentSearchActivity extends Activity
         super.onResume();
         receiver = new WiFiDirectBroadcastReceiver(this);
         registerReceiver(receiver, intentFilter);
-        opponentsSearch();
+
+        manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(OpponentSearchActivity.this, "Discovery Initiated",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(int reasonCode) {
+                Toast.makeText(OpponentSearchActivity.this, "Discovery Failed : " + reasonCode,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
