@@ -1,30 +1,32 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 
 public class WaitOpponentActivity extends Activity
         implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
-        , DeviceListFragment.DeviceActionListener {
+        , DeviceListFragment.DeviceActionListener, WifiP2pManager.ConnectionInfoListener{
 
     private Class destination;
 
     private final IntentFilter intentFilter = new IntentFilter();
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
-    private BroadcastReceiver receiver = null;
+    private WiFiDirectBroadcastReceiver receiver = null;
     public static String TAG = "WaitOpponentActivity";
+    private DeviceListFragment deviceListFragment;
+    private WifiP2pInfo wifiP2pInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class WaitOpponentActivity extends Activity
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
 
+
+        deviceListFragment = new DeviceListFragment();
     }
 
     @Override
@@ -98,16 +102,29 @@ public class WaitOpponentActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
+        if (deviceListFragment.getDevice() != null) {
+            if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+                Toast.makeText(this, "接続が完了しました", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     public void onThisDeviceChanged() {
         Log.v(TAG, "onThisDeviceChanged");
+        deviceListFragment.updateThisDevice((WifiP2pDevice) receiver.getIntent().getParcelableExtra(
+                WifiP2pManager.EXTRA_WIFI_P2P_DEVICE));
     }
 
     /* implemented DeviceActionListener */
     @Override
     public void connect(WifiP2pConfig config) {
 
+    }
+
+    @Override
+    public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+        Log.v(TAG, "onConnectionInfoAvailable");
+        this.wifiP2pInfo = wifiP2pInfo;
     }
 }
