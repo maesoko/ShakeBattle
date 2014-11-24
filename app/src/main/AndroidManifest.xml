@@ -53,6 +53,8 @@
             android:screenOrientation="portrait"
             >
         </activity>
+
+        <service android:enabled="true" android:name=".DataTransferService" />
     </application>
 
 </manifest>
