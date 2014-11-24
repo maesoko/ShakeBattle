@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
+import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 
 public class OpponentSearchActivity extends Activity
         implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
-        ,DeviceListFragment.DeviceActionListener{
+        ,DeviceListFragment.DeviceActionListener, WifiP2pManager.ConnectionInfoListener{
 
     private IntentFilter intentFilter;
     private WifiP2pManager manager;
@@ -26,6 +28,7 @@ public class OpponentSearchActivity extends Activity
     private DeviceListFragment deviceListFragment;
 
     private Button researchButton;
+    private WifiP2pInfo wifiP2pInfo;
 
     public static String TAG = "OpponentSearchActivity";
 
@@ -51,10 +54,17 @@ public class OpponentSearchActivity extends Activity
         channel = manager.initialize(this, getMainLooper(), null);
 
         researchButton = (Button) findViewById(R.id.button_retry_discover);
+        final Activity activity = this;
         researchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               opponentsSearch();
+                Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
+                serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
+//                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+//                        wifiP2pInfo.groupOwnerAddress.getHostAddress());
+                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, DataTransferService.EXTRAS_PORT_NUMBER);
+                activity.startService(serviceIntent);
+                new DataServerAsyncTask((android.widget.TextView) view).execute();
             }
         });
     }
@@ -123,11 +133,18 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
+        if (deviceListFragment.getDevice() != null) {
+            if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+                Toast.makeText(this, "接続が完了しました", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override
     public void onThisDeviceChanged() {
         Log.v(TAG, "onThisDeviceChanged");
+        deviceListFragment.updateThisDevice((WifiP2pDevice) receiver.getIntent().getParcelableExtra(
+                WifiP2pManager.EXTRA_WIFI_P2P_DEVICE));
     }
 
     /* implemented DeviceActionListener */
@@ -144,5 +161,11 @@ public class OpponentSearchActivity extends Activity
                 Log.v(TAG, "onFailure");
             }
         });
+    }
+
+    @Override
+    public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+        Log.v(TAG, "onConnectionInfoAvailable");
+        this.wifiP2pInfo = wifiP2pInfo;
     }
 }
