@@ -151,11 +151,15 @@ public class DeviceListFragment extends ListFragment implements WifiP2pManager.P
             if (device != null) {
                 TextView top = (TextView) v.findViewById(R.id.device_name);
                 TextView status = (TextView) v.findViewById(R.id.device_status);
+                TextView modeText = (TextView) v.findViewById(R.id.mode_text);
                 if (top != null) {
                     top.setText(device.deviceName);
                 }
                 if (status != null) {
                     status.setText(getDeviceStatus(device.status));
+                }
+                if (modeText != null) {
+                    new DataServerAsyncTask(modeText).execute();
                 }
             }
 
