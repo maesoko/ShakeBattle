@@ -16,7 +16,7 @@ public class DataTransferService extends IntentService{
     public static final String ACTION_SEND_DATA = "jp.ac.it_college.std.s13012.shakebattle.SEND_DATA";
     public static final String EXTRAS_GROUP_OWNER_ADDRESS = "go_host";
     public static final String EXTRAS_GROUP_OWNER_PORT = "go_port";
-    public static final int EXTRAS_PORT_NUMBER = 8839;
+    public static final int EXTRAS_PORT_NUMBER = 12345;
 
     public DataTransferService(String name) {
         super(name);
@@ -29,22 +29,23 @@ public class DataTransferService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent.getAction().equals(ACTION_SEND_DATA)) {
-//            String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
-            Socket socket = new Socket();
+            String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
             int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
+            Socket socket = new Socket();
+            String userInput = intent.getStringExtra("user_input");
 
             try {
                 Log.v(WaitOpponentActivity.TAG, "Opening client socket - ");
                 socket.bind(null);
-                socket.connect((new InetSocketAddress(port)), SOCKET_TIMEOUT);
-//                socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
+//                socket.connect((new InetSocketAddress(port)), SOCKET_TIMEOUT);
+                socket.connect((new InetSocketAddress(host, port)), SOCKET_TIMEOUT);
 
                 Log.d(WaitOpponentActivity.TAG, "Client socket - " + socket.isConnected());
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                         socket.getOutputStream()
                 ));
-                writer.write("test");
+                writer.write(userInput);
                 writer.flush();
                 writer.close();
 

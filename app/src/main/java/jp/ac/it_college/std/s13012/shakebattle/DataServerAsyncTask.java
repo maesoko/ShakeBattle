@@ -1,6 +1,8 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -14,9 +16,11 @@ import java.net.Socket;
 public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
 
     private TextView textView;
+    private Context context;
 
-    public DataServerAsyncTask(TextView textView) {
+    public DataServerAsyncTask(Context context, TextView textView) {
         this.textView = textView;
+        this.context = context;
     }
 
     @Override
@@ -45,6 +49,6 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         textView.setText(result);
-        Log.v(WaitOpponentActivity.TAG, "onPostExecute:" + textView.getText());
+        Log.v(OpponentSearchActivity.TAG, "onPostExecute:" + textView.getText().toString());
     }
 }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pInfo;
@@ -11,7 +12,9 @@ import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 
 public class WaitOpponentActivity extends Activity
@@ -27,6 +30,8 @@ public class WaitOpponentActivity extends Activity
     public static String TAG = "WaitOpponentActivity";
     private DeviceListFragment deviceListFragment;
     private WifiP2pInfo wifiP2pInfo;
+    private EditText userInput;
+    private Button sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +48,23 @@ public class WaitOpponentActivity extends Activity
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
 
-
         deviceListFragment = new DeviceListFragment();
+        userInput = (EditText) findViewById(R.id.user_input);
+        sendButton = (Button) findViewById(R.id.button_send);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+                    Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
+                    serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+                            wifiP2pInfo.groupOwnerAddress.getHostAddress());
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, DataTransferService.EXTRAS_PORT_NUMBER);
+                    serviceIntent.putExtra("user_input", userInput.getText().toString());
+                    startService(serviceIntent);
+                }
+            }
+        });
     }
 
     @Override
@@ -102,10 +122,10 @@ public class WaitOpponentActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
-        if (deviceListFragment.getDevice() != null) {
-            if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
-                Toast.makeText(this, "接続が完了しました", Toast.LENGTH_SHORT).show();
-            }
+        NetworkInfo networkInfo = (NetworkInfo) receiver.getIntent()
+                .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+        if (networkInfo.isConnected()) {
+            manager.requestConnectionInfo(channel, this);
         }
     }
 
@@ -119,9 +139,10 @@ public class WaitOpponentActivity extends Activity
     /* implemented DeviceActionListener */
     @Override
     public void connect(WifiP2pConfig config) {
-
+        Log.v(TAG, "connect");
     }
 
+    /* implemented ConnectionInfoListener */
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
         Log.v(TAG, "onConnectionInfoAvailable");

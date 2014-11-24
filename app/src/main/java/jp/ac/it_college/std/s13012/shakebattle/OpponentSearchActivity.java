@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -29,6 +30,8 @@ public class OpponentSearchActivity extends Activity
 
     private Button researchButton;
     private WifiP2pInfo wifiP2pInfo;
+    private Button receptionButton;
+    private Button disconnectionButton;
 
     public static String TAG = "OpponentSearchActivity";
 
@@ -58,6 +61,33 @@ public class OpponentSearchActivity extends Activity
             @Override
             public void onClick(View view) {
                 opponentsSearch();
+            }
+        });
+
+        receptionButton = (Button) findViewById(R.id.button_reception);
+        receptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView textView = (TextView) findViewById(R.id.header);
+                new DataServerAsyncTask(getApplicationContext(), textView).execute();
+            }
+        });
+
+        disconnectionButton = (Button) findViewById(R.id.disconnection);
+        disconnectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                manager.removeGroup(channel, new WifiP2pManager.ActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.v(TAG, "removeGroup success");
+                    }
+
+                    @Override
+                    public void onFailure(int i) {
+                        Log.v(TAG, "removeGroup failure");
+                    }
+                });
             }
         });
     }
@@ -139,11 +169,7 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
-        if (deviceListFragment.getDevice() != null) {
-            if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
-                Toast.makeText(this, "接続が完了しました", Toast.LENGTH_SHORT).show();
-            }
-        }
+
     }
 
     @Override
@@ -169,6 +195,7 @@ public class OpponentSearchActivity extends Activity
         });
     }
 
+    /* implemented ConnectionInfoListener */
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
         Log.v(TAG, "onConnectionInfoAvailable");
