@@ -24,7 +24,7 @@ public class WaitOpponentActivity extends Activity
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private BroadcastReceiver receiver = null;
-    private String TAG = "WaitOpponentActivity";
+    public static String TAG = "WaitOpponentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
