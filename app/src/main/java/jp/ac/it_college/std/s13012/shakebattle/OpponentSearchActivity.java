@@ -169,7 +169,9 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
-
+        if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+            Toast.makeText(this, "接続しました", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
