@@ -30,7 +30,6 @@
         android:layout_toLeftOf="@id/button_send"
         android:singleLine="true"
         android:layout_alignParentLeft="true"
-        android:text="hoge"
         />
 
 </RelativeLayout>
