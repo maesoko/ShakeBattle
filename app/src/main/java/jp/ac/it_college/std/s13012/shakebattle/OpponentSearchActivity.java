@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pInfo;
@@ -16,6 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
+
 
 public class OpponentSearchActivity extends Activity
         implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
@@ -25,12 +28,12 @@ public class OpponentSearchActivity extends Activity
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private WiFiDirectBroadcastReceiver receiver;
-
+    private WifiP2pInfo wifiP2pInfo;
     private DeviceListFragment deviceListFragment;
 
     private Button researchButton;
-    private WifiP2pInfo wifiP2pInfo;
-    private Button receptionButton;
+    private Button receptionStartButton;
+    private Button receptionStopButton;
     private Button disconnectionButton;
 
     public static String TAG = "OpponentSearchActivity";
@@ -53,6 +56,7 @@ public class OpponentSearchActivity extends Activity
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
 
+
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
 
@@ -61,16 +65,33 @@ public class OpponentSearchActivity extends Activity
             @Override
             public void onClick(View view) {
                 opponentsSearch();
+
             }
         });
 
-        receptionButton = (Button) findViewById(R.id.button_reception);
-        receptionButton.setOnClickListener(new View.OnClickListener() {
+        final Activity activity = this;
+        receptionStartButton = (Button) findViewById(R.id.button_reception_start);
+        receptionStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DataServerAsyncTask.isReception = true;
-                TextView textView = (TextView) findViewById(R.id.header);
-                new DataServerAsyncTask(getApplicationContext(), textView).execute();
+                if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+                    Intent serviceIntent = new Intent(activity, DataTransferService.class);
+                    serviceIntent.setAction(DataTransferService.ACTION_GET_DATA);
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS
+                            , wifiP2pInfo.groupOwnerAddress.getHostAddress());
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
+                            , DataTransferService.EXTRAS_PORT_NUMBER);
+                    serviceIntent.putExtra("res_id", R.id.header);
+
+                    startService(serviceIntent);
+                }
+            }
+        });
+
+        receptionStopButton = (Button) findViewById(R.id.button_reception_stop);
+        receptionStopButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
             }
         });
 
@@ -170,10 +191,13 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
-        if (deviceListFragment.getDevice() != null &&
-                deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+        NetworkInfo networkInfo = (NetworkInfo) receiver.getIntent()
+                .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+        if (networkInfo.isConnected()) {
             Toast.makeText(this, "接続しました", Toast.LENGTH_SHORT).show();
+            manager.requestConnectionInfo(channel, this);
         }
+
     }
 
     @Override
@@ -205,4 +229,5 @@ public class OpponentSearchActivity extends Activity
         Log.v(TAG, "onConnectionInfoAvailable");
         this.wifiP2pInfo = wifiP2pInfo;
     }
+
 }

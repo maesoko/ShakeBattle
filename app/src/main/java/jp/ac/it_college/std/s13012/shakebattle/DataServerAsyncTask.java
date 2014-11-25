@@ -25,7 +25,6 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-
         try {
             ServerSocket serverSocket = new ServerSocket(DataTransferService.EXTRAS_PORT_NUMBER);
             Log.v(OpponentSearchActivity.TAG, "Server: Socket opened");
@@ -37,7 +36,7 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
 
             String result = br.readLine();
             br.close();
-
+            client.close();
             serverSocket.close();
             return result;
         } catch (IOException e) {

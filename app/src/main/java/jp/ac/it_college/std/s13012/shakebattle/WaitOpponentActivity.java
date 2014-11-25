@@ -125,11 +125,11 @@ public class WaitOpponentActivity extends Activity
         Log.v(TAG, "onConnectionChanged");
         NetworkInfo networkInfo = (NetworkInfo) receiver.getIntent()
                 .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
-
         if (networkInfo.isConnected()) {
             Toast.makeText(this, "接続しました", Toast.LENGTH_SHORT).show();
             manager.requestConnectionInfo(channel, this);
         }
+
     }
 
     @Override
