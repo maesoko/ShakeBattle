@@ -68,6 +68,7 @@ public class OpponentSearchActivity extends Activity
         receptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataServerAsyncTask.isReception = true;
                 TextView textView = (TextView) findViewById(R.id.header);
                 new DataServerAsyncTask(getApplicationContext(), textView).execute();
             }
@@ -169,7 +170,8 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionChanged() {
         Log.v(TAG, "onConnectionChanged");
-        if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
+        if (deviceListFragment.getDevice() != null &&
+                deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
             Toast.makeText(this, "接続しました", Toast.LENGTH_SHORT).show();
         }
     }
