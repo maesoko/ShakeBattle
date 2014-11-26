@@ -68,6 +68,8 @@ public class WaitOpponentActivity extends Activity
                             , DataTransferService.EXTRAS_PORT_NUMBER);
                     serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
                     serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
+                    serviceIntent.putExtra(DataTransferService.OPPONENT_NAME
+                            ,deviceListFragment.getDevice().deviceName);
 
                     startService(serviceIntent);
                 }

@@ -37,6 +37,9 @@ public class CountAttackActivity extends ShakeActivity
         ((TextView)findViewById(R.id.label_goal_number))
                 .setText(String.valueOf(goal));
 
+        String opponentName = getIntent().getStringExtra(DataTransferService.OPPONENT_NAME);
+        ((TextView)findViewById(R.id.name_of_person)).setText(opponentName);
+
         message = (TextView) findViewById(R.id.message);
         SurfaceView surface = (SurfaceView) findViewById(R.id.label_elapsed_time_count);
         mTimeSurfaceView = new TimeSurfaceView(surface);

@@ -16,6 +16,7 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
     private Context context;
     private int goalValue;
     private String gameMode;
+    private String opponentName;
 
     public DataServerAsyncTask(Context context) {
         this.context = context;
@@ -32,6 +33,7 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
             DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
             goalValue = dataInputStream.readInt();
             gameMode = dataInputStream.readUTF();
+            opponentName = dataInputStream.readUTF();
 
             dataInputStream.close();
             client.close();
@@ -59,9 +61,11 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String result) {
         Log.v(OpponentSearchActivity.TAG, "goalValue = " + goalValue);
         Log.v(OpponentSearchActivity.TAG, "gameMode = " + gameMode);
+        Log.v(OpponentSearchActivity.TAG, "opponentName = " + opponentName);
 
         Intent intent = new Intent(context, nextActivity(gameMode))
-                .putExtra(BaseFragment.GOAL_VALUE, goalValue);
+                .putExtra(BaseFragment.GOAL_VALUE, goalValue)
+                .putExtra(DataTransferService.OPPONENT_NAME, opponentName);
         context.startActivity(intent);
     }
 }

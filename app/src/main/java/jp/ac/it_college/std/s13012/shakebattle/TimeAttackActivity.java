@@ -30,12 +30,14 @@ public class TimeAttackActivity extends ShakeActivity
         setContentView(R.layout.activity_time_attack);
         this.goal = getIntent().getIntExtra(BaseFragment.GOAL_VALUE, -1);
 
-        shakeDiscriminator = new ShakeDiscriminator();
+        String opponentName = getIntent().getStringExtra(DataTransferService.OPPONENT_NAME);
+        ((TextView)findViewById(R.id.name_of_person)).setText(opponentName);
         mCountTextView = (TextView) findViewById(R.id.current_count);
+        shakeDiscriminator = new ShakeDiscriminator();
+        message = (TextView) findViewById(R.id.message);
         timer = (TextView) findViewById(R.id.remaining_time);
         timer.setText(String.valueOf(goal / 1000));
         countDown = new CountDown(goal, 1000);
-        message = (TextView) findViewById(R.id.message);
         //センサーの準備
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         super.ready(message);
