@@ -17,18 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
-
 
 public class OpponentSearchActivity extends Activity
         implements WifiP2pManager.ChannelListener, WiFiDirectBroadcastReceiver.OnReceiveListener
-        ,DeviceListFragment.DeviceActionListener, WifiP2pManager.ConnectionInfoListener{
+        , DeviceListFragment.DeviceActionListener, WifiP2pManager.ConnectionInfoListener {
 
     private IntentFilter intentFilter;
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private WiFiDirectBroadcastReceiver receiver;
-    private WifiP2pInfo wifiP2pInfo;
+    private WifiP2pInfo info;
     private DeviceListFragment deviceListFragment;
 
     private Button researchButton;
@@ -68,23 +66,13 @@ public class OpponentSearchActivity extends Activity
 
             }
         });
-        final TextView textView = (TextView) findViewById(R.id.header);
 
         final Activity activity = this;
         receptionStartButton = (Button) findViewById(R.id.button_reception_start);
         receptionStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
-                    Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
-                    serviceIntent.setAction(DataTransferService.ACTION_GET_DATA);
-                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS
-                            , wifiP2pInfo.groupOwnerAddress.getHostAddress());
-                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
-                            , DataTransferService.EXTRAS_PORT_NUMBER);
-
-                    startActivity(serviceIntent);
-                }
+                new DataServerAsyncTask(activity).execute();
             }
         });
 
@@ -227,7 +215,14 @@ public class OpponentSearchActivity extends Activity
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
         Log.v(TAG, "onConnectionInfoAvailable");
-        this.wifiP2pInfo = wifiP2pInfo;
+        this.info = wifiP2pInfo;
+        Log.v("test", "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
+        Log.v("test", "device address = " + deviceListFragment.getDevice().deviceName);
+
+        if (info.groupFormed) {
+            new DataServerAsyncTask(this).execute();
+        }
+
     }
 
 }

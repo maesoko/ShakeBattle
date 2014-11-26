@@ -38,13 +38,14 @@ public class DataTransferService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
-        int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
 
         try {
             if (intent.getAction().equals(ACTION_SEND_DATA)) {
+                String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
+                int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
                 Socket socket = new Socket();
-                String userInput = intent.getStringExtra("user_input");
+                String nextActivity = intent.getStringExtra("game_mode");
+                int goalValue = intent.getIntExtra("goal", -1);
 
                 Log.v(WaitOpponentActivity.TAG, "Opening client socket - ");
                 socket.bind(null);
@@ -55,32 +56,16 @@ public class DataTransferService extends IntentService {
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
                         socket.getOutputStream()
                 ));
-                writer.write(userInput);
+
+                writer.append(nextActivity);
+                writer.newLine();
+                writer.append((char) goalValue);
+
                 writer.flush();
                 writer.close();
                 socket.close();
             }
 
-            if (intent.getAction().equals(ACTION_GET_DATA)) {
-                Log.v(OpponentSearchActivity.TAG, "Server: Socket opened");
-                ServerSocket serverSocket = new ServerSocket(EXTRAS_PORT_NUMBER);
-                Log.v(OpponentSearchActivity.TAG, "Server: connection done");
-
-                while (!serverSocket.isClosed()) {
-                    Log.v(OpponentSearchActivity.TAG, "Opening client socket - ");
-                    Socket client = serverSocket.accept();
-                    Log.d(OpponentSearchActivity.TAG, "Client socket - " + String.valueOf(client.isConnected()));
-
-                    BufferedReader br = new BufferedReader(new InputStreamReader(
-                            client.getInputStream()));
-
-                    final String result = br.readLine();
-                    Log.v(OpponentSearchActivity.TAG, "result = " + result);
-
-                    client.close();
-                }
-                serverSocket.close();
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }

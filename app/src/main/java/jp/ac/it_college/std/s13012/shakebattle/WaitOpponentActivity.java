@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -23,16 +22,21 @@ public class WaitOpponentActivity extends Activity
         , DeviceListFragment.DeviceActionListener, WifiP2pManager.ConnectionInfoListener{
 
     private Class destination;
+    private int goal = 0;
 
     private final IntentFilter intentFilter = new IntentFilter();
     private WifiP2pManager manager;
     private WifiP2pManager.Channel channel;
     private WiFiDirectBroadcastReceiver receiver = null;
-    public static String TAG = "WaitOpponentActivity";
+    private WifiP2pInfo info;
     private DeviceListFragment deviceListFragment;
-    private WifiP2pInfo wifiP2pInfo;
-    private EditText userInput;
+
+    public static String TAG = "WaitOpponentActivity";
+    public static final String TIME_ATTACK_MODE = "time_attack";
+    public static final String COUNT_ATTACK_MODE = "count_attack";
+
     private Button sendButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class WaitOpponentActivity extends Activity
         setContentView(R.layout.activity_wait_opponent);
 
         destination = (Class) getIntent().getSerializableExtra(BaseFragment.DESTINATION_CLASS);
+        goal = getIntent().getIntExtra(BaseFragment.GOAL_VALUE, -1);
 
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -50,7 +55,6 @@ public class WaitOpponentActivity extends Activity
         channel = manager.initialize(this, getMainLooper(), null);
 
         deviceListFragment = new DeviceListFragment();
-        userInput = (EditText) findViewById(R.id.user_input);
         sendButton = (Button) findViewById(R.id.button_send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,19 +63,35 @@ public class WaitOpponentActivity extends Activity
                     Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
                     serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
                     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-                            wifiP2pInfo.groupOwnerAddress.getHostAddress());
-                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, DataTransferService.EXTRAS_PORT_NUMBER);
-                    serviceIntent.putExtra("user_input", userInput.getText().toString());
+                            info.groupOwnerAddress.getHostAddress());
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
+                            , DataTransferService.EXTRAS_PORT_NUMBER);
+                    serviceIntent.putExtra("game_mode", getMode(destination));
+
                     startService(serviceIntent);
                 }
             }
         });
     }
 
+    private String getMode(Class nextActivity){
+        if (nextActivity == TimeAttackActivity.class) {
+            return TIME_ATTACK_MODE;
+        }
+
+        if (nextActivity == CountAttackActivity.class) {
+            return COUNT_ATTACK_MODE;
+        }
+
+        return null;
+    }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            Intent intent = new Intent(this, destination);
+            Intent intent = new Intent(this, destination)
+                    .putExtra(BaseFragment.GOAL_VALUE, goal);
             startActivity(intent);
             return true;
         }
@@ -149,6 +169,12 @@ public class WaitOpponentActivity extends Activity
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
         Log.v(TAG, "onConnectionInfoAvailable");
-        this.wifiP2pInfo = wifiP2pInfo;
+        this.info = wifiP2pInfo;
+        Log.v(TAG, "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
+        Log.v(TAG, "device address = " + deviceListFragment.getDevice().deviceName);
+
+        if (info.groupFormed && info.isGroupOwner) {
+
+        }
     }
 }
