@@ -3,17 +3,12 @@ package jp.ac.it_college.std.s13012.shakebattle;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class DataTransferService extends IntentService {
@@ -24,6 +19,8 @@ public class DataTransferService extends IntentService {
     public static final String EXTRAS_GROUP_OWNER_ADDRESS = "go_host";
     public static final String EXTRAS_GROUP_OWNER_PORT = "go_port";
     public static final int EXTRAS_PORT_NUMBER = 12345;
+    public static final String GOAL_VALUE = "goal";
+    public static final String GAME_MODE = "game_mode";
 
     private Context context;
     private TextView textView;
@@ -43,9 +40,10 @@ public class DataTransferService extends IntentService {
             if (intent.getAction().equals(ACTION_SEND_DATA)) {
                 String host = intent.getExtras().getString(EXTRAS_GROUP_OWNER_ADDRESS);
                 int port = intent.getExtras().getInt(EXTRAS_GROUP_OWNER_PORT);
+                String gameMode = intent.getStringExtra(GAME_MODE);
+                int goalValue = intent.getIntExtra(GOAL_VALUE, -1);
+
                 Socket socket = new Socket();
-                String nextActivity = intent.getStringExtra("game_mode");
-                int goalValue = intent.getIntExtra("goal", -1);
 
                 Log.v(WaitOpponentActivity.TAG, "Opening client socket - ");
                 socket.bind(null);
@@ -53,16 +51,12 @@ public class DataTransferService extends IntentService {
 
                 Log.d(WaitOpponentActivity.TAG, "Client socket - " + socket.isConnected());
 
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(
-                        socket.getOutputStream()
-                ));
+                DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
+                dataOutputStream.writeInt(goalValue);
+                dataOutputStream.writeUTF(gameMode);
 
-                writer.append(nextActivity);
-                writer.newLine();
-                writer.append((char) goalValue);
-
-                writer.flush();
-                writer.close();
+                dataOutputStream.flush();
+                dataOutputStream.close();
                 socket.close();
             }
 

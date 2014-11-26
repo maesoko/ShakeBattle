@@ -66,7 +66,8 @@ public class WaitOpponentActivity extends Activity
                             info.groupOwnerAddress.getHostAddress());
                     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
                             , DataTransferService.EXTRAS_PORT_NUMBER);
-                    serviceIntent.putExtra("game_mode", getMode(destination));
+                    serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
+                    serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
 
                     startService(serviceIntent);
                 }
