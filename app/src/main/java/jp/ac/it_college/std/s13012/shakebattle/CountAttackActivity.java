@@ -25,14 +25,17 @@ public class CountAttackActivity extends ShakeActivity
     private int mCounter = 0;
     private ShakeDiscriminator shakeDiscriminator;
     private boolean mGameIsRunning = false;
+    private int goal = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_count_attack);
 
+        this.goal = getIntent().getIntExtra(BaseFragment.GOAL_VALUE, -1);
+
         ((TextView)findViewById(R.id.label_goal_number))
-                .setText(String.valueOf(CountSelectFragment.getGoalCount()));
+                .setText(String.valueOf(goal));
 
         message = (TextView) findViewById(R.id.message);
         SurfaceView surface = (SurfaceView) findViewById(R.id.label_elapsed_time_count);
@@ -89,7 +92,7 @@ public class CountAttackActivity extends ShakeActivity
         if (sensorEvent.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             //振った回数が目標回数と同じになったらメソッドを抜ける
             if (Integer.parseInt(mCountTextView.getText().toString()) ==
-                    CountSelectFragment.getGoalCount()) {
+                    goal) {
                 gameEnd();
                 return;
             }

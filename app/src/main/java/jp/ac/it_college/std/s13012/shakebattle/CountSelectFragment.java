@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 public class CountSelectFragment extends BaseFragment implements View.OnClickListener {
 
-    private static int goalCount;
 
     public CountSelectFragment() {
         // Required empty public constructor
@@ -31,28 +30,17 @@ public class CountSelectFragment extends BaseFragment implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_count_50:
-                setGoalCount(50);
-                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class, 50);
                 break;
             case R.id.button_count_100:
-                setGoalCount(100);
-                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class, 100);
                 break;
             case R.id.button_count_2000:
-                setGoalCount(2000);
-                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), CountAttackActivity.class, 2000);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());
                 break;
         }
-    }
-
-    public static int getGoalCount() {
-        return goalCount;
-    }
-
-    public static void setGoalCount(int goalCount) {
-        CountSelectFragment.goalCount = goalCount;
     }
 }

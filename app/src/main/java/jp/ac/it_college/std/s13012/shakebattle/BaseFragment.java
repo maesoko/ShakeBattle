@@ -8,6 +8,7 @@ import android.content.Intent;
 public abstract class BaseFragment extends Fragment {
 
     public static final String DESTINATION_CLASS = "destination_class";
+    public static final String GOAL_VALUE = "goal";
 
     public void fragmentReplace(int id, Fragment fragment) {
         getFragmentManager().beginTransaction()
@@ -16,9 +17,10 @@ public abstract class BaseFragment extends Fragment {
                 .commit();
     }
 
-    public void selectedTimeOrCount(Context context, Class destination) {
+    public void selectedTimeOrCount(Context context, Class destination, int goal) {
         Intent intent = new Intent(context, WaitOpponentActivity.class)
-                .putExtra(DESTINATION_CLASS, destination);
+                .putExtra(DESTINATION_CLASS, destination)
+                .putExtra(GOAL_VALUE, goal);
         startActivity(intent);
     }
 }

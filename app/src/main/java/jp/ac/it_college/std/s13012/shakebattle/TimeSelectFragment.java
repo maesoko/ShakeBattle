@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 public class TimeSelectFragment extends BaseFragment implements View.OnClickListener {
 
-    private static long remainingTime;
 
     public TimeSelectFragment() {
         // Required empty public constructor
@@ -31,28 +30,17 @@ public class TimeSelectFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button_time_10sec:
-                setRemainingTime(10000);
-                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class, 10000);
                 break;
             case R.id.button_time_20sec:
-                setRemainingTime(20000);
-                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class, 20000);
                 break;
             case R.id.button_time_30sec:
-                setRemainingTime(30000);
-                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class);
+                super.selectedTimeOrCount(getActivity(), TimeAttackActivity.class, 30000);
                 break;
             case R.id.button_to_title:
                 super.fragmentReplace(R.id.fragment_container, new ModeFragment());
                 break;
         }
-    }
-
-    public static long getRemainingTime() {
-        return remainingTime;
-    }
-
-    public static void setRemainingTime(int remainingTime) {
-        TimeSelectFragment.remainingTime = remainingTime;
     }
 }
