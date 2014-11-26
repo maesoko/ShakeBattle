@@ -15,7 +15,6 @@ public class DataTransferService extends IntentService {
 
     private static final int SOCKET_TIMEOUT = 5000;
     public static final String ACTION_SEND_DATA = "jp.ac.it_college.std.s13012.shakebattle.SEND_DATA";
-    public static final String ACTION_GET_DATA = "jp.ac.it_college.std.s13012.shakebattle.GET_DATA";
     public static final String EXTRAS_GROUP_OWNER_ADDRESS = "go_host";
     public static final String EXTRAS_GROUP_OWNER_PORT = "go_port";
     public static final int EXTRAS_PORT_NUMBER = 12345;
