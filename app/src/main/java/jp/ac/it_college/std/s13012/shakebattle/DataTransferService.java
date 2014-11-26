@@ -1,6 +1,7 @@
 package jp.ac.it_college.std.s13012.shakebattle;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,9 @@ public class DataTransferService extends IntentService {
     public static final String EXTRAS_GROUP_OWNER_ADDRESS = "go_host";
     public static final String EXTRAS_GROUP_OWNER_PORT = "go_port";
     public static final int EXTRAS_PORT_NUMBER = 12345;
+
+    private Context context;
+    private TextView textView;
 
     public DataTransferService(String name) {
         super(name);
@@ -58,7 +62,6 @@ public class DataTransferService extends IntentService {
             }
 
             if (intent.getAction().equals(ACTION_GET_DATA)) {
-                int resId = intent.getIntExtra("res_id", -1);
                 Log.v(OpponentSearchActivity.TAG, "Server: Socket opened");
                 ServerSocket serverSocket = new ServerSocket(EXTRAS_PORT_NUMBER);
                 Log.v(OpponentSearchActivity.TAG, "Server: connection done");

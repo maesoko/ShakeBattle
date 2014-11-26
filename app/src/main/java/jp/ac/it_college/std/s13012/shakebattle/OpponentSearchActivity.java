@@ -68,6 +68,7 @@ public class OpponentSearchActivity extends Activity
 
             }
         });
+        final TextView textView = (TextView) findViewById(R.id.header);
 
         final Activity activity = this;
         receptionStartButton = (Button) findViewById(R.id.button_reception_start);
@@ -75,15 +76,14 @@ public class OpponentSearchActivity extends Activity
             @Override
             public void onClick(View view) {
                 if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
-                    Intent serviceIntent = new Intent(activity, DataTransferService.class);
+                    Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
                     serviceIntent.setAction(DataTransferService.ACTION_GET_DATA);
                     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS
                             , wifiP2pInfo.groupOwnerAddress.getHostAddress());
                     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
                             , DataTransferService.EXTRAS_PORT_NUMBER);
-                    serviceIntent.putExtra("res_id", R.id.header);
 
-                    startService(serviceIntent);
+                    startActivity(serviceIntent);
                 }
             }
         });
