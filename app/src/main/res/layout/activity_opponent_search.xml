@@ -27,21 +27,6 @@
         />
 
     <Button
-        android:id="@+id/button_reception_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="受信"
-        />
-
-    <Button
-        android:id="@+id/button_reception_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/button_reception_start"
-        android:text="停止"
-        />
-
-    <Button
         android:id="@+id/disconnection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

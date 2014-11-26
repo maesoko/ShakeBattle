@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,8 +29,6 @@ public class OpponentSearchActivity extends Activity
     private DeviceListFragment deviceListFragment;
 
     private Button researchButton;
-    private Button receptionStartButton;
-    private Button receptionStopButton;
     private Button disconnectionButton;
 
     public static String TAG = "OpponentSearchActivity";
@@ -64,22 +61,6 @@ public class OpponentSearchActivity extends Activity
             public void onClick(View view) {
                 opponentsSearch();
 
-            }
-        });
-
-        final Activity activity = this;
-        receptionStartButton = (Button) findViewById(R.id.button_reception_start);
-        receptionStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DataServerAsyncTask(activity).execute();
-            }
-        });
-
-        receptionStopButton = (Button) findViewById(R.id.button_reception_stop);
-        receptionStopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
             }
         });
 
