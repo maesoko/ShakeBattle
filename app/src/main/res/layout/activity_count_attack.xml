@@ -81,6 +81,7 @@
         />
 
     <TextView
+        android:id="@+id/label_during_the_competition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/name_of_person"

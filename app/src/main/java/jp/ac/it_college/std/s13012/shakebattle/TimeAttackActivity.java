@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 
@@ -23,12 +24,21 @@ public class TimeAttackActivity extends ShakeActivity
     private ShakeDiscriminator shakeDiscriminator;
     private boolean mGameIsRunning = false;
     private int goal = 0;
+    private boolean isSoloPlay = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_attack);
         this.goal = getIntent().getIntExtra(BaseFragment.GOAL_VALUE, -1);
+
+        //ソロプレイ時は対戦相手の表示を消す
+        isSoloPlay = getIntent().getBooleanExtra(WaitOpponentActivity.IS_SOLO_PLAY, false);
+        if (isSoloPlay) {
+            findViewById(R.id.name_of_person).setVisibility(View.GONE);
+            findViewById(R.id.label_during_the_competition).setVisibility(View.GONE);
+        }
 
         String opponentName = getIntent().getStringExtra(DataTransferService.OPPONENT_NAME);
         ((TextView)findViewById(R.id.name_of_person)).setText(opponentName);

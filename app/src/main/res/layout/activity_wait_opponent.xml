@@ -9,6 +9,7 @@
     tools:context="jp.ac.it_college.std.s13012.shakebattle.WaitOpponentActivity">
 
     <TextView
+        android:id="@+id/label_wait_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -17,11 +18,11 @@
         />
 
     <Button
-        android:id="@+id/button_send"
+        android:id="@+id/button_solo_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="送信"
+        android:text="一人でプレイ"
         />
 
 

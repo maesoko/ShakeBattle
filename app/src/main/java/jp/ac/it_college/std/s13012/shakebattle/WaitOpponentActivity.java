@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -23,6 +24,7 @@ public class WaitOpponentActivity extends Activity
 
     private Class destination;
     private int goal = 0;
+    private boolean isReady = false;
 
     private final IntentFilter intentFilter = new IntentFilter();
     private WifiP2pManager manager;
@@ -34,8 +36,10 @@ public class WaitOpponentActivity extends Activity
     public static String TAG = "WaitOpponentActivity";
     public static final String TIME_ATTACK_MODE = "time_attack";
     public static final String COUNT_ATTACK_MODE = "count_attack";
+    public static final String IS_SOLO_PLAY = "solo";
+    private TextView waitMessage;
 
-    private Button sendButton;
+    private Button soloPlayButton;
 
 
     @Override
@@ -55,24 +59,16 @@ public class WaitOpponentActivity extends Activity
         channel = manager.initialize(this, getMainLooper(), null);
 
         deviceListFragment = new DeviceListFragment();
-        sendButton = (Button) findViewById(R.id.button_send);
-        sendButton.setOnClickListener(new View.OnClickListener() {
+        waitMessage = (TextView) findViewById(R.id.label_wait_message);
+
+        soloPlayButton = (Button) findViewById(R.id.button_solo_play);
+        soloPlayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (deviceListFragment.getDevice().status == WifiP2pDevice.CONNECTED) {
-                    Intent serviceIntent = new Intent(getApplicationContext(), DataTransferService.class);
-                    serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
-                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-                            info.groupOwnerAddress.getHostAddress());
-                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
-                            , DataTransferService.EXTRAS_PORT_NUMBER);
-                    serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
-                    serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
-                    serviceIntent.putExtra(DataTransferService.OPPONENT_NAME
-                            ,deviceListFragment.getDevice().deviceName);
-
-                    startService(serviceIntent);
-                }
+                Intent intent = new Intent(getApplicationContext(), destination)
+                        .putExtra(BaseFragment.GOAL_VALUE, goal)
+                        .putExtra(IS_SOLO_PLAY, true);
+                startActivity(intent);
             }
         });
     }
@@ -92,10 +88,25 @@ public class WaitOpponentActivity extends Activity
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP && isReady) {
+
+            Intent serviceIntent = new Intent(this, DataTransferService.class);
+            serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
+            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+                    info.groupOwnerAddress.getHostAddress());
+            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
+                    , DataTransferService.EXTRAS_PORT_NUMBER);
+            serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
+            serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
+            serviceIntent.putExtra(DataTransferService.OPPONENT_NAME
+                    ,deviceListFragment.getDevice().deviceName);
+
+            startService(serviceIntent);
+
             Intent intent = new Intent(this, destination)
                     .putExtra(BaseFragment.GOAL_VALUE, goal);
             startActivity(intent);
+
             return true;
         }
         return super.onTouchEvent(event);
@@ -106,6 +117,7 @@ public class WaitOpponentActivity extends Activity
         super.onResume();
         receiver = new WiFiDirectBroadcastReceiver(this);
         registerReceiver(receiver, intentFilter);
+        isReady = false;
 
         manager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
             @Override
@@ -129,7 +141,7 @@ public class WaitOpponentActivity extends Activity
     /* implemented ChannelListener */
     @Override
     public void onChannelDisconnected() {
-
+        Log.v(TAG, "onChannelDisconnected");
     }
 
     /* implemented OnReceiveListener */
@@ -153,6 +165,10 @@ public class WaitOpponentActivity extends Activity
             manager.requestConnectionInfo(channel, this);
         }
 
+        if (networkInfo.isAvailable()) {
+            waitMessage.setText("対戦相手を待っています...");
+        }
+
     }
 
     @Override
@@ -174,10 +190,11 @@ public class WaitOpponentActivity extends Activity
         Log.v(TAG, "onConnectionInfoAvailable");
         this.info = wifiP2pInfo;
         Log.v(TAG, "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
-        Log.v(TAG, "device address = " + deviceListFragment.getDevice().deviceName);
+        Log.v(TAG, "device name = " + deviceListFragment.getDevice().deviceName);
 
-        if (info.groupFormed && info.isGroupOwner) {
-
+        if (info.groupFormed) {
+            waitMessage.setText("対戦相手が見つかりました\n画面をタッチしてスタート");
+            isReady = true;
         }
     }
 }
