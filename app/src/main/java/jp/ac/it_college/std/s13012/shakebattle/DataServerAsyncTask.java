@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.DataInputStream;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
