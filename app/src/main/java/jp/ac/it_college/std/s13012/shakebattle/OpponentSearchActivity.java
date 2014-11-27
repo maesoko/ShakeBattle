@@ -194,7 +194,6 @@ public class OpponentSearchActivity extends Activity
             new DataServerAsyncTask(this).execute();
         } else {
             Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
-
         }
 
     }

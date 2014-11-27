@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -35,6 +37,13 @@ public class DataServerAsyncTask extends AsyncTask<Void, Void, String> {
             gameMode = dataInputStream.readUTF();
             opponentName = dataInputStream.readUTF();
 
+            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
+            dataOutputStream.writeInt(goalValue);
+            dataOutputStream.writeUTF(gameMode);
+            dataOutputStream.writeUTF(opponentName);
+
+            dataOutputStream.flush();
+            dataOutputStream.close();
             dataInputStream.close();
             client.close();
             serverSocket.close();
