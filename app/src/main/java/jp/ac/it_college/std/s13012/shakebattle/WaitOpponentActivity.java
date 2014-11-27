@@ -89,6 +89,10 @@ public class WaitOpponentActivity extends Activity
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP && isReady) {
             if (info.isGroupOwner) {
+                Intent intent = new Intent(this, destination)
+                        .putExtra(BaseFragment.GOAL_VALUE, goal);
+                startActivity(intent);
+
                 new DataServerAsyncTask(this).execute();
             } else {
                 Intent serviceIntent = new Intent(this, DataTransferService.class);
