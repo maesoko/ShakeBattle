@@ -89,23 +89,27 @@ public class WaitOpponentActivity extends Activity
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP && isReady) {
+            if (info.isGroupOwner) {
+                new DataServerAsyncTask(this).execute();
+            } else {
+                Intent serviceIntent = new Intent(this, DataTransferService.class);
+                serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
+                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+                        info.groupOwnerAddress.getHostAddress());
+                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
+                        , DataTransferService.EXTRAS_PORT_NUMBER);
+                serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
+                serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
+                serviceIntent.putExtra(DataTransferService.OPPONENT_NAME
+                        , deviceListFragment.getDevice().deviceName);
 
-            Intent serviceIntent = new Intent(this, DataTransferService.class);
-            serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
-            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-                    info.groupOwnerAddress.getHostAddress());
-            serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT
-                    , DataTransferService.EXTRAS_PORT_NUMBER);
-            serviceIntent.putExtra(DataTransferService.GAME_MODE, getMode(destination));
-            serviceIntent.putExtra(DataTransferService.GOAL_VALUE, goal);
-            serviceIntent.putExtra(DataTransferService.OPPONENT_NAME
-                    ,deviceListFragment.getDevice().deviceName);
+                startService(serviceIntent);
 
-            startService(serviceIntent);
+                Intent intent = new Intent(this, destination)
+                        .putExtra(BaseFragment.GOAL_VALUE, goal);
+                startActivity(intent);
 
-            Intent intent = new Intent(this, destination)
-                    .putExtra(BaseFragment.GOAL_VALUE, goal);
-            startActivity(intent);
+            }
 
             return true;
         }
@@ -191,9 +195,15 @@ public class WaitOpponentActivity extends Activity
         Log.v(TAG, "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
         Log.v(TAG, "device name = " + deviceListFragment.getDevice().deviceName);
 
-        if (info.groupFormed) {
+        if (wifiP2pInfo.groupFormed) {
             waitMessage.setText("対戦相手が見つかりました\n画面をタッチしてスタート");
             isReady = true;
+        }
+
+        if (info.isGroupOwner) {
+            Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
+        } else {
+            Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
         }
     }
 }

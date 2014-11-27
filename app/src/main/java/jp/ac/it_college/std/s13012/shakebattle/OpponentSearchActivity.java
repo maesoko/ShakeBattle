@@ -168,7 +168,6 @@ public class OpponentSearchActivity extends Activity
     /* implemented DeviceActionListener */
     @Override
     public void connect(WifiP2pConfig config) {
-        config.groupOwnerIntent = 15;
         manager.connect(channel, config, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -187,11 +186,15 @@ public class OpponentSearchActivity extends Activity
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
         Log.v(TAG, "onConnectionInfoAvailable");
         this.info = wifiP2pInfo;
-        Log.v("test", "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
-        Log.v("test", "device address = " + deviceListFragment.getDevice().deviceName);
+        Log.v(TAG, "host address = " + wifiP2pInfo.groupOwnerAddress.getHostAddress());
+        Log.v(TAG, "device name = " + deviceListFragment.getDevice().deviceName);
 
-        if (info.groupFormed) {
+        if (info.isGroupOwner) {
+            Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
             new DataServerAsyncTask(this).execute();
+        } else {
+            Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
+
         }
 
     }
