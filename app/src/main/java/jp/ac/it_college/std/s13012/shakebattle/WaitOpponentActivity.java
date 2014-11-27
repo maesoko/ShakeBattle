@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class WaitOpponentActivity extends Activity
@@ -108,7 +107,6 @@ public class WaitOpponentActivity extends Activity
                 Intent intent = new Intent(this, destination)
                         .putExtra(BaseFragment.GOAL_VALUE, goal);
                 startActivity(intent);
-
             }
 
             return true;
@@ -202,6 +200,7 @@ public class WaitOpponentActivity extends Activity
 
         if (info.isGroupOwner) {
             Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
+            new DataServerAsyncTask(this).execute();
         } else {
             Log.v(TAG, "isGroupOwner - " + String.valueOf(info.isGroupOwner));
         }
