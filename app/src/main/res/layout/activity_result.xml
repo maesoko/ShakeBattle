@@ -17,86 +17,99 @@
         android:text="@string/win"
         />
 
-    <TextView
-        android:id="@+id/label_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_result"
-        android:layout_centerHorizontal="true"
-        android:text="@string/time_attack"
-        />
 
-    <TextView
-        android:id="@+id/label_difficulty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_mode"
-        android:layout_toRightOf="@id/label_mode"
-        android:layout_marginLeft="20dp"
-        android:text="0"
-        />
+        <TextView
+            android:id="@+id/label_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="24sp"
+            android:text="@string/time_attack"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_difficulty"
-        android:layout_toRightOf="@id/label_difficulty"
-        android:text="@string/unit_count"
-        />
+        <TextView
+            android:id="@+id/label_difficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_mode"
+            android:textSize="24sp"
+            android:layout_toRightOf="@id/label_mode"
+            android:layout_marginLeft="20dp"
+            android:text="0"
+            />
 
-    <TextView
-        android:id="@+id/label_number_of_times_you_shook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_mode"
-        android:layout_centerHorizontal="true"
-        android:text="振った回数"
-        />
+        <TextView
+            android:id="@+id/label_mode_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_difficulty"
+            android:layout_toRightOf="@id/label_difficulty"
+            android:textSize="24sp"
+            android:text="@string/unit_count"
+            />
 
-    <TextView
-        android:id="@+id/label_shook_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_number_of_times_you_shook"
-        android:layout_toRightOf="@id/label_number_of_times_you_shook"
-        android:layout_marginLeft="20dp"
-        android:text="0"
-        />
+        <TextView
+            android:id="@+id/label_result_time_or_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_mode"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:text="@string/shake_was_number_of_times"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_shook_count"
-        android:layout_toRightOf="@id/label_shook_count"
-        android:text="@string/unit_count"
-        />
+        <TextView
+            android:id="@+id/label_game_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_result_time_or_count"
+            android:layout_toRightOf="@id/label_result_time_or_count"
+            android:layout_marginLeft="20dp"
+            android:textSize="24sp"
+            android:text="0"
+            />
 
-    <TextView
-        android:id="@+id/label_result_of_opponent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/label_number_of_times_you_shook"
-        android:layout_centerHorizontal="true"
-        android:text="@string/result_of_opponent"
-        />
+        <TextView
+            android:id="@+id/label_game_result_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_game_result"
+            android:layout_toRightOf="@id/label_game_result"
+            android:textSize="24sp"
+            android:text="@string/unit_count"
+            />
 
-    <TextView
-        android:id="@+id/label_number_of_times_opponent_shook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_result_of_opponent"
-        android:layout_toRightOf="@id/label_result_of_opponent"
-        android:layout_marginLeft="20dp"
-        android:text="0"
-        />
+        <TextView
+            android:id="@+id/label_result_of_opponent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_result_time_or_count"
+            android:layout_centerHorizontal="true"
+            android:textSize="24sp"
+            android:text="@string/result_of_opponent"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/label_number_of_times_opponent_shook"
-        android:layout_toRightOf="@id/label_number_of_times_opponent_shook"
-        android:text="@string/unit_count"
-        />
+        <TextView
+            android:id="@+id/label_number_of_times_opponent_shook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_result_of_opponent"
+            android:layout_toRightOf="@id/label_result_of_opponent"
+            android:layout_marginLeft="20dp"
+            android:textSize="24sp"
+            android:text="0"
+            />
+
+        <TextView
+            android:id="@+id/label_opponent_result_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/label_number_of_times_opponent_shook"
+            android:layout_toRightOf="@id/label_number_of_times_opponent_shook"
+            android:textSize="24sp"
+            android:text="@string/unit_count"
+            />
+
 
     <TextView
         android:id="@+id/label_title"

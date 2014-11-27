@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -86,17 +87,19 @@ public class CountAttackActivity extends ShakeActivity
         mTimeSurfaceView.endMeasurement();
         mGameIsRunning = false;
         message.setText("Finish!");
-    }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP && !mGameIsRunning) {
-            gameEnd();
-            Intent intent = new Intent(this, ResultActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onTouchEvent(event);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra(ResultActivity.GAME_MODE, getString(R.string.count_attack));
+                intent.putExtra(ResultActivity.GOAL_VALUE, goal);
+                intent.putExtra(ResultActivity.GAME_RESULT
+                        ,String.format("%.2f", mTimeSurfaceView.getElapsedTime() / 1000f));
+                intent.putExtra(ResultActivity.IS_SOLO_PLAY, isSoloPlay);
+                startActivity(intent);
+            }
+        }, 3000);
     }
 
     @Override

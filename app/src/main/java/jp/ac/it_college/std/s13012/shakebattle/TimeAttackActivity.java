@@ -7,7 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.MotionEvent;
+import android.os.Handler;
 import android.view.View;
 import android.widget.TextView;
 
@@ -78,16 +78,18 @@ public class TimeAttackActivity extends ShakeActivity
     public void gameEnd() {
         mGameIsRunning = false;
         message.setText("Finish!");
-    }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_UP && !mGameIsRunning) {
-            Intent intent = new Intent(this, ResultActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        return super.onTouchEvent(event);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra(ResultActivity.GAME_MODE, getString(R.string.time_attack));
+                intent.putExtra(ResultActivity.GOAL_VALUE, goal / 1000);
+                intent.putExtra(ResultActivity.GAME_RESULT, mCountTextView.getText());
+                intent.putExtra(ResultActivity.IS_SOLO_PLAY, isSoloPlay);
+                startActivity(intent);
+            }
+        }, 3000);
     }
 
     @Override

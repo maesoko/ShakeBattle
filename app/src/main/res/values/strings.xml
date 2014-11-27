@@ -37,5 +37,8 @@
     <string name="title_activity_wait_opponent">WaitOpponentActivity</string>
     <string name="retry_discover">再検索</string>
     <string name="searching_for_opponent">対戦相手を検索中...</string>
+    <string name="game_result">Game Result</string>
+    <string name="shake_was_number_of_times">振った回数</string>
+
 
 </resources>
