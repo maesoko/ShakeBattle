@@ -161,7 +161,6 @@ public class WaitOpponentActivity extends Activity
         NetworkInfo networkInfo = (NetworkInfo) receiver.getIntent()
                 .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
         if (networkInfo.isConnected()) {
-            Toast.makeText(this, "接続しました", Toast.LENGTH_SHORT).show();
             manager.requestConnectionInfo(channel, this);
         }
 
